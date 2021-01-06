@@ -87,6 +87,9 @@ dependencies {
     implementation appDependencies.navigationUI
     implementation appDependencies.media
 
+    implementation appDependencies.androidxFragment
+    implementation appDependencies.androidxActivity
+
     //Data store
     implementation appDependencies.dataStorePrefs
 

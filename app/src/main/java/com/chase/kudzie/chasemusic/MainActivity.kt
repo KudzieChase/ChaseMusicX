@@ -21,6 +21,9 @@ import dagger.android.AndroidInjection
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.support.HasSupportFragmentInjector
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.withContext
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -82,6 +85,8 @@ class MainActivity :
             bottomNav.setupWithNavController(navigationController)
 
             lifecycleScope.launchWhenResumed {
+                //It crashes without this delay... Maybe it could be reduced to 50ms
+                delay(100)
                 navigationController.addOnDestinationChangedListener { _, destination, _ ->
                     when (destination.id) {
                         R.id.songs,
