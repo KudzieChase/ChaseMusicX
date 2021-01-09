@@ -86,6 +86,8 @@ dependencies {
     implementation appDependencies.navigationFragment
     implementation appDependencies.navigationUI
     implementation appDependencies.media
+    //For popup menus
+    implementation appDependencies.cascade
 
     implementation appDependencies.androidxFragment
     implementation appDependencies.androidxActivity

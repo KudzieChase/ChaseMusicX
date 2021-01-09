@@ -38,8 +38,9 @@ ext {
     roomVersion = '2.2.5'
     moshiVersion = '1.9.3'
     dataStoreVersion = '1.0.0-alpha05'
-
     livedataktxVersion = '2.2.0'
+    cascadeVersion = '1.2.0'
+
     //Compose versions
     composeVersion = '1.0.0-alpha01'
 
@@ -164,7 +165,8 @@ ext {
             navigationFragment           : "androidx.navigation:navigation-fragment-ktx:${navigationVersion}",
             navigationUI                 : "androidx.navigation:navigation-ui-ktx:${navigationVersion}",
             media                        : "androidx.media:media:${mediaVersion}",
-            dataStorePrefs               : "androidx.datastore:datastore-preferences:${dataStoreVersion}"
+            dataStorePrefs               : "androidx.datastore:datastore-preferences:${dataStoreVersion}",
+            cascade                      : "me.saket.cascade:cascade:${cascadeVersion}"
     ]
 
     composeDependencies = [
