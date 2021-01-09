@@ -1,15 +1,22 @@
 package com.chase.kudzie.chasemusic.ui.albumdetails
 
 import android.content.Context
+import android.content.res.ColorStateList
 import android.graphics.Color
+import android.graphics.Color.BLACK
+import android.graphics.drawable.ColorDrawable
+import android.graphics.drawable.RippleDrawable
 import android.os.Bundle
+import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
+import android.widget.Toast
 import androidx.core.view.doOnPreDraw
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.asLiveData
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.chase.kudzie.chasemusic.R
@@ -23,8 +30,12 @@ import com.chase.kudzie.chasemusic.ui.albumdetails.adapters.DetailSongsAdapter
 import com.chase.kudzie.chasemusic.ui.albums.AlbumViewModel
 import com.chase.kudzie.chasemusic.ui.artists.ArtistsViewModel
 import com.chase.kudzie.chasemusic.util.loadListener
+import com.chase.kudzie.chasemusic.util.widget.RoundedRectDrawable
 import com.google.android.material.transition.MaterialContainerTransform
 import dagger.android.support.AndroidSupportInjection
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.flowOn
+import me.saket.cascade.CascadePopupMenu
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
@@ -102,12 +113,23 @@ class AlbumDetailsFragment : Fragment() {
                 }
             })
 
+            albumDetailViewModel.sortOrderFlow
+                .flowOn(Dispatchers.Main)
+                .asLiveData()
+                .observe(viewLifecycleOwner, {
+                    albumDetailViewModel.getSongsByAlbum(args.albumId)
+                })
+
             btnShuffle.setOnClickListener {
                 //TODO implement and execute shuffle
             }
 
             toolbar.setNavigationOnClickListener {
                 findNavController().navigateUp()
+            }
+
+            menuButton.setOnClickListener {
+                showCascadeMenu(anchor = menuButton)
             }
 
             postponeEnterTransition(1000L, TimeUnit.MILLISECONDS)
@@ -140,6 +162,74 @@ class AlbumDetailsFragment : Fragment() {
         mediaProvider.playMediaFromId(MediaIdCategory.makeAlbumCategory(args.albumId, song.id))
     }
 
+    private fun showCascadeMenu(anchor: View) {
+        val popupMenu = CascadePopupMenu(requireContext(), anchor)
+
+        popupMenu.menu.apply {
+            add("Add to a Playlist").setOnMenuItemClickListener {
+                Toast.makeText(requireContext(), "Working on it :D", Toast.LENGTH_SHORT).show()
+                popupMenu.navigateBack()
+                true
+            }
+            add("Play Next").setOnMenuItemClickListener {
+                Toast.makeText(requireContext(), "Working on it :D", Toast.LENGTH_SHORT).show()
+                popupMenu.navigateBack()
+                true
+            }
+            addSubMenu("Sort by").also { submenu ->
+                submenu.add("Title Ascending").setOnMenuItemClickListener {
+                    albumDetailViewModel.sortOrderAZ()
+                    popupMenu.navigateBack()
+                    true
+                }
+                submenu.add("Title Descending").setOnMenuItemClickListener {
+                    albumDetailViewModel.sortOrderZA()
+                    popupMenu.navigateBack()
+                    true
+                }
+                submenu.add("Track Number").setOnMenuItemClickListener {
+                    albumDetailViewModel.sortOrderTrackNumber()
+                    popupMenu.navigateBack()
+                    true
+                }
+                submenu.add("Song Duration").setOnMenuItemClickListener {
+                    albumDetailViewModel.sortOrderSongDuration()
+                    popupMenu.navigateBack()
+                    true
+                }
+            }
+        }
+
+        popupMenu.show()
+    }
+
+    private fun cascadeMenuStyler(): CascadePopupMenu.Styler {
+        val rippleDrawable = {
+            RippleDrawable(
+                ColorStateList.valueOf(Color.parseColor("#B1DDC6")),
+                null,
+                ColorDrawable(BLACK)
+            )
+        }
+
+        return CascadePopupMenu.Styler(
+            background = {
+                RoundedRectDrawable(Color.parseColor("#E0EEE7"), radius = 8f.dip)
+            },
+            menuTitle = {
+                it.itemView.background = rippleDrawable()
+            },
+            menuItem = {
+                it.itemView.background = rippleDrawable()
+            }
+        )
+    }
+
+    private val Float.dip: Float
+        get() {
+            val metrics = resources.displayMetrics
+            return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, this, metrics)
+        }
 
     override fun onDestroy() {
         super.onDestroy()

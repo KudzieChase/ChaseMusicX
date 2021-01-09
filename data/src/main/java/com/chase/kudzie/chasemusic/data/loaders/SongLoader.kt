@@ -13,7 +13,8 @@ import android.provider.MediaStore.MediaColumns.TITLE
 import com.chase.kudzie.chasemusic.data.sorting.SortOrder
 
 internal class SongLoader(
-    private val contentResolver: ContentResolver
+    private val contentResolver: ContentResolver,
+    private val sortOrder: String
 ) {
 
     companion object {
@@ -29,7 +30,6 @@ internal class SongLoader(
             ALBUM_ID,
             IS_MUSIC
         )
-        const val sortOrder = SortOrder.SongSortOrder.SONG_A_Z
     }
 
     @SuppressLint("Recycle")

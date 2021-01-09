@@ -9,7 +9,8 @@ import android.provider.MediaStore
 import android.provider.MediaStore.Audio.*
 
 internal class PlaylistLoader(
-    private val contentResolver: ContentResolver
+    private val contentResolver: ContentResolver,
+    private val playlistSongOrder: String
 ) {
 
     companion object {
@@ -22,8 +23,6 @@ internal class PlaylistLoader(
 
         const val selection = "${AudioColumns.IS_MUSIC} = 1 " +
                 "AND ${AudioColumns.TITLE} != '' "
-
-        const val sortOrder = Playlists.DEFAULT_SORT_ORDER
     }
 
     @SuppressLint("Recycle")
@@ -31,7 +30,7 @@ internal class PlaylistLoader(
         val selection = null
         val selectionArgs = null
 
-        return contentResolver.query(uri, projection, selection, selectionArgs, sortOrder)!!
+        return contentResolver.query(uri, projection, selection, selectionArgs, playlistSongOrder)!!
     }
 
     @SuppressLint("Recycle")

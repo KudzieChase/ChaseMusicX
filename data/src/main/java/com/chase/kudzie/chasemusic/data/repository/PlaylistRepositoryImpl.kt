@@ -8,23 +8,32 @@ import com.chase.kudzie.chasemusic.data.loaders.PlaylistLoader
 import com.chase.kudzie.chasemusic.data.mapper.toPlaylist
 import com.chase.kudzie.chasemusic.domain.model.Playlist
 import com.chase.kudzie.chasemusic.domain.repository.PlaylistRepository
+import com.chase.kudzie.chasemusic.domain.repository.PreferencesRepository
 import com.chase.kudzie.chasemusic.domain.scope.ApplicationContext
 import javax.inject.Inject
 
 class PlaylistRepositoryImpl @Inject constructor(
-    @ApplicationContext context: Context
+    @ApplicationContext context: Context,
+    private val preferencesRepository: PreferencesRepository
 ) : PlaylistRepository {
 
     private val contentResolver: ContentResolver = context.contentResolver
 
     override suspend fun getPlaylists(): List<Playlist> {
         return contentResolver.queryAll(
-            PlaylistLoader(contentResolver).getAll()
+            PlaylistLoader(
+                contentResolver = contentResolver,
+                playlistSongOrder = preferencesRepository.getPlaylistSortOrder()
+            ).getAll()
         ) { it.toPlaylist() }.map { playlist ->
             playlist.copy(
                 songCount = contentResolver
-                    .queryCountRow(PlaylistLoader(contentResolver).getPlaylistCount(playlist.id)
-                )
+                    .queryCountRow(
+                        PlaylistLoader(
+                            contentResolver = contentResolver,
+                            playlistSongOrder = preferencesRepository.getPlaylistSortOrder()
+                        ).getPlaylistCount(playlist.id)
+                    )
             )
         }
     }

@@ -8,30 +8,38 @@ import com.chase.kudzie.chasemusic.data.loaders.ArtistLoader
 import com.chase.kudzie.chasemusic.data.mapper.toArtist
 import com.chase.kudzie.chasemusic.domain.model.Artist
 import com.chase.kudzie.chasemusic.domain.repository.ArtistRepository
+import com.chase.kudzie.chasemusic.domain.repository.PreferencesRepository
 import com.chase.kudzie.chasemusic.domain.scope.ApplicationContext
 import javax.inject.Inject
 
 class ArtistRepositoryImpl @Inject constructor(
-    @ApplicationContext context: Context
+    @ApplicationContext context: Context,
+    preferencesRepository: PreferencesRepository
 ) : ArtistRepository {
 
     private val contentResolver: ContentResolver = context.contentResolver
 
+    private val artistLoader = ArtistLoader(
+        contentResolver = contentResolver,
+        artistSortOrder = preferencesRepository.getArtistSortOrder(),
+        artistSongSortOrder = preferencesRepository.getArtistSongSortOrder()
+    )
+
     override suspend fun getArtist(id: Long): Artist {
         return contentResolver.queryOne(
-            ArtistLoader(contentResolver).getArtist(id)
+            artistLoader.getArtist(id)
         ) { it.toArtist() }!!
     }
 
     override suspend fun getArtists(): List<Artist> {
         return contentResolver.queryAll(
-            ArtistLoader(contentResolver).getAll()
+            artistLoader.getAll()
         ) { it.toArtist() }
     }
 
     override suspend fun findArtists(searchString: String): List<Artist> {
         return contentResolver.queryAll(
-            ArtistLoader(contentResolver).findArtists(searchString)
+            artistLoader.findArtists(searchString)
         ) { it.toArtist() }
     }
 }

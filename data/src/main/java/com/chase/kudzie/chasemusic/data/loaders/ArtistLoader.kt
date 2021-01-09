@@ -11,7 +11,9 @@ import android.provider.MediaStore.Audio.AudioColumns
 import com.chase.kudzie.chasemusic.data.sorting.SortOrder
 
 internal class ArtistLoader(
-    private val contentResolver: ContentResolver
+    private val contentResolver: ContentResolver,
+    private val artistSortOrder: String,
+    private val artistSongSortOrder: String
 ) {
 
     companion object {
@@ -24,7 +26,7 @@ internal class ArtistLoader(
             NUMBER_OF_TRACKS
         )
 
-        const val sortOrder = SortOrder.ArtistSortOrder.ARTIST_A_Z
+        const val defaultSortOrder = SortOrder.ArtistSortOrder.ARTIST_A_Z
     }
 
     @SuppressLint("Recycle")
@@ -32,7 +34,7 @@ internal class ArtistLoader(
         val selection = null
         val selectionArgs = null
 
-        return contentResolver.query(uri, projection, selection, selectionArgs, sortOrder)!!
+        return contentResolver.query(uri, projection, selection, selectionArgs, artistSortOrder)!!
     }
 
     @SuppressLint("Recycle")
@@ -42,7 +44,7 @@ internal class ArtistLoader(
             "$id"
         )
 
-        return contentResolver.query(uri, projection, selection, selectionArgs, sortOrder)!!
+        return contentResolver.query(uri, projection, selection, selectionArgs, artistSortOrder)!!
     }
 
     @SuppressLint("Recycle")
@@ -52,7 +54,7 @@ internal class ArtistLoader(
             "%$searchString%"
         )
 
-        return contentResolver.query(uri, projection, selection, selectionArgs, sortOrder)!!
+        return contentResolver.query(uri, projection, selection, selectionArgs, defaultSortOrder)!!
     }
 
 
@@ -83,7 +85,7 @@ internal class ArtistLoader(
         val selectionArgs = null
         val uri = SongLoader.uri
         val projection = SongLoader.projection
-        val sortOrder = SongLoader.sortOrder
+        val sortOrder = artistSongSortOrder
 
         return contentResolver.query(uri, projection, selection, selectionArgs, sortOrder)!!
     }

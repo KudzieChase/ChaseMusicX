@@ -139,11 +139,17 @@ class SortOrder {
             const val ALBUM_Z_A = "$ALBUM_A_Z DESC"
 
             /* Artist album sort order songs */
-            const val ALBUM_NUMBER_OF_SONGS = MediaStore.Audio.Artists.Albums.NUMBER_OF_SONGS + " DESC"
+            const val ALBUM_NUMBER_OF_SONGS =
+                MediaStore.Audio.Artists.Albums.NUMBER_OF_SONGS + " DESC"
 
             /* Artist album sort order year */
-            const  val ALBUM_YEAR = MediaStore.Audio.Artists.Albums.FIRST_YEAR + " DESC"
+            const val ALBUM_YEAR = MediaStore.Audio.Artists.Albums.FIRST_YEAR + " DESC"
         }
     }
 
+    interface PlaylistSortOrder {
+        companion object {
+            const val DEFAULT = MediaStore.Audio.Playlists.DEFAULT_SORT_ORDER
+        }
+    }
 }
