@@ -18,10 +18,12 @@ class ArtistsViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val _artists = MutableLiveData<List<Artist>>()
-    val artists: LiveData<List<Artist>> = _artists
+    val artists: LiveData<List<Artist>>
+        get() = _artists
 
     private val _artist = MutableLiveData<Artist>()
-    val artist: LiveData<Artist> = _artist
+    val artist: LiveData<Artist>
+        get() = _artist
 
     init {
         viewModelScope.launch(Dispatchers.IO) {

@@ -10,5 +10,7 @@ class QueueViewModel @Inject constructor(private val preferences: PreferencesRep
 
     val currentQueuePositionFlow: Flow<Int> = preferences.observeCurrentQueuePosition()
 
-    val currentQueuePosition = preferences.getCurrentQueuePosition()
+    val currentQueuePosition
+        get() = preferences.getCurrentQueuePosition()
+
 }

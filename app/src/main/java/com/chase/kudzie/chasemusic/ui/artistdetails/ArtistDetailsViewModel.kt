@@ -21,9 +21,10 @@ class ArtistDetailsViewModel @Inject constructor(
     private val _albums = MutableLiveData<List<Album>>()
     private val _songs = MutableLiveData<List<Song>>()
 
-    val albums: LiveData<List<Album>> = _albums
-    val songs: LiveData<List<Song>> = _songs
-
+    val albums: LiveData<List<Album>>
+        get() = _albums
+    val songs: LiveData<List<Song>>
+        get() = _songs
 
     fun getAlbumsByArtist(artistId: Long) {
         viewModelScope.launch(Dispatchers.IO) {

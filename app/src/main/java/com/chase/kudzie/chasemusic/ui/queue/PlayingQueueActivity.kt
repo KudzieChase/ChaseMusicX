@@ -57,6 +57,7 @@ class PlayingQueueActivity : BaseMediaActivity() {
                             queue,
                             ::onItemDragged
                         ).itemTouchHelper
+
                         itemTouchHelper.attachToRecyclerView(this)
 
                         scrollToPosition(viewModel.currentQueuePosition)

@@ -18,10 +18,12 @@ class AlbumViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val _albums = MutableLiveData<List<Album>>()
-    val albums: LiveData<List<Album>> = _albums
+    val albums: LiveData<List<Album>>
+        get() = _albums
 
     private val _album = MutableLiveData<Album>()
-    val album: LiveData<Album> = _album
+    val album: LiveData<Album>
+        get() = _album
 
     init {
         viewModelScope.launch(Dispatchers.IO) {

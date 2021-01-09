@@ -16,7 +16,8 @@ class PlaylistsViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val _playlists = MutableLiveData<List<Playlist>>()
-    val playlists: LiveData<List<Playlist>> = _playlists
+    val playlists: LiveData<List<Playlist>>
+        get() = _playlists
 
     init {
         viewModelScope.launch(Dispatchers.IO) {
