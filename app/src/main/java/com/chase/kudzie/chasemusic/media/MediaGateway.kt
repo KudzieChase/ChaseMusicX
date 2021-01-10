@@ -128,7 +128,7 @@ class MediaGateway(
     }
 
     override fun onConnectionStateChanged(state: ConnectionState) {
-        launch(Dispatchers.IO) {
+        launch(Dispatchers.Main) {
             connectionFlow.emit(state)
         }
     }
