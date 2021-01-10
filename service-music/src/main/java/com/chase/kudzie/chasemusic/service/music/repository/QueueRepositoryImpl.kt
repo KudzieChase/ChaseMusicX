@@ -323,6 +323,8 @@ internal class QueueRepositoryImpl @Inject constructor(
         val newQueuePosition =
             songQueue.indexOfFirst { song -> song.positionInQueue == currentSong.positionInQueue }
         currentQueuePosition = newQueuePosition
+
+        publishQueue(songQueue)
         saveQueueState(songQueue)
     }
 
