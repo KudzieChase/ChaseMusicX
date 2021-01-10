@@ -21,6 +21,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.yield
 import java.util.*
@@ -44,8 +45,15 @@ internal class QueueRepositoryImpl @Inject constructor(
     private var queueStateJob: Job? = null
 
     private val queueFlow = MutableSharedFlow<List<MediaItem>>(replay = 0)
+    private val queueFlowDebounced = MutableSharedFlow<List<MediaItem>>(replay = 0)
 
     init {
+        launch {
+            queueFlowDebounced.debounce(1100).collect {
+                consumeQueue(it)
+            }
+        }
+
         launch {
             queueFlow.collect {
                 consumeQueue(it)
@@ -53,9 +61,13 @@ internal class QueueRepositoryImpl @Inject constructor(
         }
     }
 
-    private fun publishQueue(list: List<MediaItem>) {
+    private fun publishQueue(list: List<MediaItem>, emitNow: Boolean) {
         launch {
-            queueFlow.emit(list)
+            if (emitNow) {
+                queueFlow.emit(list)
+            } else {
+                queueFlowDebounced.emit(list)
+            }
         }
     }
 
@@ -80,7 +92,7 @@ internal class QueueRepositoryImpl @Inject constructor(
             currentQueuePosition = newPosition
             val resultTrack = songQueue.getOrNull(newPosition)
             //You know what we do! ✌
-            publishQueue(songQueue)
+            publishQueue(songQueue, emitNow = true)
             saveQueuePosition(songQueue)
             return resultTrack?.toPlayableMediaItem()
         }
@@ -97,7 +109,7 @@ internal class QueueRepositoryImpl @Inject constructor(
             currentQueuePosition = newPosition
             val resultTrack = songQueue.getOrNull(newPosition)
             //You know what we do! ✌
-            publishQueue(songQueue)
+            publishQueue(songQueue, emitNow = true)
             saveQueuePosition(songQueue)
             return resultTrack?.toPlayableMediaItem()
         }
@@ -114,7 +126,7 @@ internal class QueueRepositoryImpl @Inject constructor(
 
         val resultTrack = songsQueue.getOrNull(currentTrackIndex) ?: return null
 
-        publishQueue(songsQueue)
+        publishQueue(songsQueue, emitNow = true)
         updateSongQueue(songsQueue)
 
         currentQueuePosition = currentTrackIndex
@@ -145,7 +157,7 @@ internal class QueueRepositoryImpl @Inject constructor(
         val currentTrackIndex = queueSongs.indexOfFirst { song -> song.id == songId }
         currentQueuePosition = currentTrackIndex
 
-        publishQueue(queueSongs)
+        publishQueue(queueSongs, emitNow = true)
         saveQueueState(queueSongs)
 
         val resultTrack = queueSongs.getOrNull(currentTrackIndex) ?: return null
@@ -168,7 +180,7 @@ internal class QueueRepositoryImpl @Inject constructor(
 
         songQueue.removeAt(positionAt)
 
-        publishQueue(songQueue)
+        publishQueue(songQueue, emitNow = true)
         saveQueueState(songQueue)
     }
 
@@ -185,13 +197,13 @@ internal class QueueRepositoryImpl @Inject constructor(
         val mediaItem = song.toIndexedSong(bottomIndex).toMediaItem(mediaIdCategory)
         songQueue.add(mediaItem)
 
-        publishQueue(songQueue)
+        publishQueue(songQueue, emitNow = true)
         saveQueueState(songQueue)
     }
 
     override fun clearQueue() {
         songQueue.clear()
-        publishQueue(songQueue)
+        publishQueue(songQueue, emitNow = true)
         saveQueueState(songQueue)
     }
 
@@ -282,7 +294,7 @@ internal class QueueRepositoryImpl @Inject constructor(
             songQueue.indexOfFirst { song -> song.positionInQueue == currentTrack.positionInQueue }
         currentQueuePosition = newTrackIndex
 
-        publishQueue(songQueue)
+        publishQueue(songQueue, emitNow = true)
     }
 
     override fun shuffleSongs() {
@@ -303,7 +315,7 @@ internal class QueueRepositoryImpl @Inject constructor(
         }
         currentQueuePosition = 0
 
-        publishQueue(songQueue)
+        publishQueue(songQueue, emitNow = true)
     }
 
     override fun swap(from: Int, to: Int) {
@@ -324,7 +336,7 @@ internal class QueueRepositoryImpl @Inject constructor(
             songQueue.indexOfFirst { song -> song.positionInQueue == currentSong.positionInQueue }
         currentQueuePosition = newQueuePosition
 
-        publishQueue(songQueue)
+        publishQueue(songQueue, emitNow = false)
         saveQueueState(songQueue)
     }
 
@@ -342,7 +354,7 @@ internal class QueueRepositoryImpl @Inject constructor(
 
 
         currentQueuePosition = position
-        publishQueue(songQueue)
+        publishQueue(songQueue, emitNow = true)
         saveQueueState(songQueue)
 
         return songQueue.getOrNull(currentQueuePosition)?.toPlayableMediaItem()
