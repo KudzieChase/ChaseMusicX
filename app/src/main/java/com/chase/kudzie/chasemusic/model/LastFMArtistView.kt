@@ -1,4 +1,3 @@
 package com.chase.kudzie.chasemusic.model
 
-class LastFMArtistView {
-}
+class LastFMArtistView
