@@ -12,7 +12,7 @@
 
         <!--Platform attributes-->
         <item name="android:navigationBarColor">?attr/colorSurface</item>
-        <item name="android:statusBarColor">@color/immersive_ui</item>
+        <item name="android:statusBarColor">?attr/colorSurface</item>
         <item name="android:windowLightStatusBar" tools:ignore="NewApi">true</item>
         <item name="android:windowLightNavigationBar" tools:ignore="NewApi">true</item>
 
