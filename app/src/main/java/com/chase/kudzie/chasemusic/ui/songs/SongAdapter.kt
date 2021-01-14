@@ -1,18 +1,12 @@
 package com.chase.kudzie.chasemusic.ui.songs
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.chase.kudzie.chasemusic.R
 import com.chase.kudzie.chasemusic.databinding.ItemSongBinding
 import com.chase.kudzie.chasemusic.domain.model.Song
 import com.chase.kudzie.chasemusic.model.SongDiff
-import com.chase.kudzie.chasemusic.util.getAlbumArtUri
 
 class SongAdapter(val onSongClick: (Song) -> Unit) :
     ListAdapter<Song, SongAdapter.ItemHolder>(SongDiff) {

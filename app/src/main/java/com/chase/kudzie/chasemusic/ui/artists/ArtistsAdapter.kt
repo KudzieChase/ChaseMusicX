@@ -1,25 +1,14 @@
 package com.chase.kudzie.chasemusic.ui.artists
 
 import android.app.Activity
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.target.CustomTarget
-import com.bumptech.glide.request.transition.Transition
-import com.chase.kudzie.chasemusic.R
 import com.chase.kudzie.chasemusic.databinding.ItemArtistBinding
 import com.chase.kudzie.chasemusic.domain.model.Artist
 import com.chase.kudzie.chasemusic.model.ArtistDiff
-import com.chase.kudzie.chasemusic.util.setGradientOnView
-import kotlinx.android.synthetic.main.item_song.view.*
 
 class ArtistsAdapter(
     val artistClick: (View, Artist) -> Unit,

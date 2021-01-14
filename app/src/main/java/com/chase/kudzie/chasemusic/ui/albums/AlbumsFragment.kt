@@ -1,10 +1,14 @@
 package com.chase.kudzie.chasemusic.ui.albums
 
 import android.content.Context
+import android.graphics.Color
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.content.res.AppCompatResources
+import androidx.core.graphics.drawable.DrawableCompat
 import androidx.core.view.doOnPreDraw
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -16,7 +20,9 @@ import com.chase.kudzie.chasemusic.domain.model.Album
 import com.chase.kudzie.chasemusic.injection.ViewModelFactory
 import com.google.android.material.transition.MaterialElevationScale
 import dagger.android.support.AndroidSupportInjection
+import me.zhanghai.android.fastscroll.FastScrollerBuilder
 import javax.inject.Inject
+
 
 class AlbumsFragment : Fragment() {
 
@@ -52,6 +58,8 @@ class AlbumsFragment : Fragment() {
                     adapter = AlbumAdapter(::onAlbumClicked).apply {
                         submitList(albums)
                     }
+
+                    FastScrollerBuilder(this).useMd2Style().build()
                 }
             })
 

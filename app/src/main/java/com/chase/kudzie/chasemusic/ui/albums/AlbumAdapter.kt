@@ -3,16 +3,11 @@ package com.chase.kudzie.chasemusic.ui.albums
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.chase.kudzie.chasemusic.R
 import com.chase.kudzie.chasemusic.databinding.ItemAlbumBinding
 import com.chase.kudzie.chasemusic.domain.model.Album
 import com.chase.kudzie.chasemusic.model.AlbumDiff
-import com.chase.kudzie.chasemusic.util.getAlbumArtUri
 
 class AlbumAdapter(val albumClicked: (View, Album) -> Unit) :
     ListAdapter<Album, AlbumAdapter.ItemHolder>(AlbumDiff) {
