@@ -380,17 +380,7 @@ internal class QueueRepositoryImpl @Inject constructor(
     }
 
     private fun Song.toIndexedSong(index: Int): Song {
-        return Song(
-            this.id,
-            this.albumName,
-            this.artistId,
-            this.artistName,
-            this.duration,
-            this.title,
-            this.trackNumber,
-            this.albumId,
-            index
-        )
+        return this.copy(positionInQueue = index)
     }
 
     private fun MediaItem.toQueueItem(): MediaSessionCompat.QueueItem {
