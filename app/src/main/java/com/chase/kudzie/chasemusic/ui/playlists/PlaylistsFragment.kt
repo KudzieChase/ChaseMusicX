@@ -7,12 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.findNavController
-import com.chase.kudzie.chasemusic.databinding.FragmentPlaylistsBinding
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.chase.kudzie.chasemusic.databinding.FragmentMediaHomeBinding
 import com.chase.kudzie.chasemusic.domain.model.Playlist
 import com.chase.kudzie.chasemusic.injection.ViewModelFactory
-import com.chase.kudzie.chasemusic.ui.albums.AlbumsFragmentDirections
 import dagger.android.support.AndroidSupportInjection
 import javax.inject.Inject
 
@@ -25,7 +24,7 @@ class PlaylistsFragment : Fragment() {
         viewModelFactory
     }
 
-    private var _binding: FragmentPlaylistsBinding? = null
+    private var _binding: FragmentMediaHomeBinding? = null
     private val binding get() = _binding!!
 
     override fun onAttach(context: Context) {
@@ -38,7 +37,7 @@ class PlaylistsFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentPlaylistsBinding.inflate(inflater, container, false)
+        _binding = FragmentMediaHomeBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -47,7 +46,9 @@ class PlaylistsFragment : Fragment() {
         binding.apply {
             viewModel.playlists.observe(
                 viewLifecycleOwner, { playlists ->
-                    playlistList.apply {
+                    mediaList.apply {
+                        layoutManager = LinearLayoutManager(requireContext())
+
                         adapter = PlaylistAdapter(::onPlaylistClick).apply {
                             submitList(playlists)
                         }

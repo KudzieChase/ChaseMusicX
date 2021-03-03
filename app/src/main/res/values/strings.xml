@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">ChaseMusicX</string>
+    <string name="app_name">Gallium</string>
     <string name="songs">Songs</string>
     <string name="albums">Albums</string>
     <string name="artists">Artists</string>
@@ -23,4 +23,6 @@
     <string name="close_currently_playing_screen">Close currently playing screen</string>
     <string name="open_current_song_queue_playlist">Open current song queue playlist</string>
     <string name="drag_indicator">Drag Indicator</string>
+    <string name="search">Search</string>
+    <string name="settings">Settings</string>
 </resources>

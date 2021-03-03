@@ -1,21 +1,18 @@
 package com.chase.kudzie.chasemusic.ui.albums
 
 import android.content.Context
-import android.graphics.Color
-import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.content.res.AppCompatResources
-import androidx.core.graphics.drawable.DrawableCompat
 import androidx.core.view.doOnPreDraw
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.FragmentNavigatorExtras
+import androidx.recyclerview.widget.GridLayoutManager
 import com.chase.kudzie.chasemusic.R
-import com.chase.kudzie.chasemusic.databinding.FragmentAlbumsBinding
+import com.chase.kudzie.chasemusic.databinding.FragmentMediaHomeBinding
 import com.chase.kudzie.chasemusic.domain.model.Album
 import com.chase.kudzie.chasemusic.injection.ViewModelFactory
 import com.google.android.material.transition.MaterialElevationScale
@@ -33,7 +30,7 @@ class AlbumsFragment : Fragment() {
         viewModelFactory
     }
 
-    private var _binding: FragmentAlbumsBinding? = null
+    private var _binding: FragmentMediaHomeBinding? = null
     private val binding get() = _binding!!
 
     override fun onAttach(context: Context) {
@@ -46,7 +43,7 @@ class AlbumsFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentAlbumsBinding.inflate(inflater, container, false)
+        _binding = FragmentMediaHomeBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -54,7 +51,8 @@ class AlbumsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.apply {
             viewModel.albums.observe(viewLifecycleOwner, { albums ->
-                albumsGrid.apply {
+                mediaList.apply {
+                    layoutManager = GridLayoutManager(requireContext(), 2)
                     adapter = AlbumAdapter(::onAlbumClicked).apply {
                         submitList(albums)
                     }

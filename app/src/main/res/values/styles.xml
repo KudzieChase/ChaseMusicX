@@ -14,4 +14,17 @@
         <item name="android:colorControlActivated">?attr/colorPrimary</item>
     </style>
 
+    <style name="Widget.Gallium.Toolbar" parent="@style/Widget.MaterialComponents.Toolbar">
+        <item name="android:background">?attr/colorSurface</item>
+    </style>
+
+    <style name="Widget.Gallium.Toolbar.SmallCapsTitle">
+        <item name="android:titleTextAppearance">@style/TextAppearance.ToolbarTitleSmallCaps</item>
+    </style>
+
+    <style name="TextAppearance.ToolbarTitleSmallCaps" parent="@style/TextAppearance.MaterialComponents.Headline4">
+        <item name="android:fontFeatureSettings">smcp</item>
+        <item name="android:letterSpacing">0.2</item>
+    </style>
+
 </resources>

@@ -12,8 +12,9 @@ import androidx.core.graphics.drawable.DrawableCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.chase.kudzie.chasemusic.R
-import com.chase.kudzie.chasemusic.databinding.FragmentSongsBinding
+import com.chase.kudzie.chasemusic.databinding.FragmentMediaHomeBinding
 import com.chase.kudzie.chasemusic.domain.model.MediaIdCategory
 import com.chase.kudzie.chasemusic.domain.model.Song
 import com.chase.kudzie.chasemusic.injection.ViewModelFactory
@@ -33,7 +34,7 @@ class SongsFragment : Fragment() {
         viewModelFactory
     }
 
-    private var _binding: FragmentSongsBinding? = null
+    private var _binding: FragmentMediaHomeBinding? = null
     private val binding get() = _binding!!
 
     override fun onAttach(context: Context) {
@@ -52,7 +53,7 @@ class SongsFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentSongsBinding.inflate(inflater, container, false)
+        _binding = FragmentMediaHomeBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -61,17 +62,23 @@ class SongsFragment : Fragment() {
         binding.apply {
             viewModel.songs.observe(
                 viewLifecycleOwner, Observer { songs ->
-                    songsList.apply {
+                    mediaList.apply {
+                        layoutManager = LinearLayoutManager(requireContext())
+
                         adapter = SongAdapter(::onSongClicked).apply {
                             submitList(songs)
                         }
 
                         val unwrappedDrawable: Drawable? =
-                            AppCompatResources.getDrawable(requireContext(), R.drawable.afs_md2_thumb)
+                            AppCompatResources.getDrawable(
+                                requireContext(),
+                                R.drawable.afs_md2_thumb
+                            )
                         val wrappedDrawable: Drawable = DrawableCompat.wrap(unwrappedDrawable!!)
                         DrawableCompat.setTint(wrappedDrawable, Color.CYAN)
 
-                        FastScrollerBuilder(this).useMd2Style().setThumbDrawable(wrappedDrawable).build()
+                        FastScrollerBuilder(this).useMd2Style().setThumbDrawable(wrappedDrawable)
+                            .build()
                     }
 
                 }

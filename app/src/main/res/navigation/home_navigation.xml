@@ -9,7 +9,7 @@
         android:id="@+id/albums"
         android:name="com.chase.kudzie.chasemusic.ui.albums.AlbumsFragment"
         android:label="AlbumsFragment"
-        tools:layout="@layout/fragment_albums">
+        tools:layout="@layout/fragment_media_home">
         <action
             android:id="@+id/action_albums_to_albumDetails"
             app:destination="@id/albumDetails" />
@@ -18,7 +18,7 @@
         android:id="@+id/artists"
         android:name="com.chase.kudzie.chasemusic.ui.artists.ArtistsFragment"
         android:label="ArtistsFragment"
-        tools:layout="@layout/fragment_artists">
+        tools:layout="@layout/fragment_media_home">
         <action
             android:id="@+id/action_artists_to_artistDetails"
             app:destination="@id/artistDetails" />
@@ -27,7 +27,7 @@
         android:id="@+id/playlists"
         android:name="com.chase.kudzie.chasemusic.ui.playlists.PlaylistsFragment"
         android:label="PlaylistsFragment"
-        tools:layout="@layout/fragment_playlists">
+        tools:layout="@layout/fragment_media_home">
         <action
             android:id="@+id/action_playlists_to_playlistDetailsFragment"
             app:destination="@id/playlistDetailsFragment" />
@@ -36,7 +36,7 @@
         android:id="@+id/songs"
         android:name="com.chase.kudzie.chasemusic.ui.songs.SongsFragment"
         android:label="SongsFragment"
-        tools:layout="@layout/fragment_songs" />
+        tools:layout="@layout/fragment_media_home" />
     <fragment
         android:id="@+id/albumDetails"
         android:name="com.chase.kudzie.chasemusic.ui.albumdetails.AlbumDetailsFragment"

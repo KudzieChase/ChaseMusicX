@@ -10,12 +10,11 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.FragmentNavigatorExtras
+import androidx.recyclerview.widget.GridLayoutManager
 import com.chase.kudzie.chasemusic.R
-import com.chase.kudzie.chasemusic.databinding.FragmentArtistsBinding
+import com.chase.kudzie.chasemusic.databinding.FragmentMediaHomeBinding
 import com.chase.kudzie.chasemusic.domain.model.Artist
-import com.chase.kudzie.chasemusic.extensions.themeColor
 import com.chase.kudzie.chasemusic.injection.ViewModelFactory
-import com.google.android.material.transition.MaterialContainerTransform
 import com.google.android.material.transition.MaterialElevationScale
 import dagger.android.support.AndroidSupportInjection
 import kotlinx.coroutines.CoroutineScope
@@ -32,7 +31,7 @@ class ArtistsFragment : Fragment(),
         viewModelFactory
     }
 
-    private var _binding: FragmentArtistsBinding? = null
+    private var _binding: FragmentMediaHomeBinding? = null
     private val binding get() = _binding!!
 
     override fun onAttach(context: Context) {
@@ -45,7 +44,7 @@ class ArtistsFragment : Fragment(),
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentArtistsBinding.inflate(inflater, container, false)
+        _binding = FragmentMediaHomeBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -54,7 +53,8 @@ class ArtistsFragment : Fragment(),
         binding.apply {
             viewModel.artists.observe(
                 viewLifecycleOwner, { artists ->
-                    artistsGrid.apply {
+                    mediaList.apply {
+                        layoutManager = GridLayoutManager(requireContext(), 2)
                         adapter = ArtistsAdapter(::onArtistClick, requireActivity())
                             .apply {
                                 submitList(artists)
@@ -62,8 +62,8 @@ class ArtistsFragment : Fragment(),
                     }
                 })
 
-           postponeEnterTransition()
-           view.doOnPreDraw { startPostponedEnterTransition() }
+            postponeEnterTransition()
+            view.doOnPreDraw { startPostponedEnterTransition() }
         }
     }
 
