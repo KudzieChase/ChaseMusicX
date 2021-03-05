@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Source: Plaid::: https://github.com/nickbutcher/plaid/ -->
+<set
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:ordering="together">
+
+    <!-- first we need to immediately reset state -->
+    <objectAnimator
+        android:propertyName="translateX"
+        android:duration="0"
+        android:valueFrom="8"
+        android:valueTo="8" />
+
+    <!-- then run the animation after a delay -->
+    <objectAnimator
+        android:propertyName="translateX"
+        android:valueFrom="8"
+        android:valueTo="0"
+        android:startOffset="@integer/searchback_show_arrow_head_delay"
+        android:duration="@integer/searchback_show_hide_arrow_head_duration"
+        android:interpolator="@android:interpolator/linear_out_slow_in" />
+
+</set>

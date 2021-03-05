@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_albums_to_albumDetails"
             app:destination="@id/albumDetails" />
+        <action
+            android:id="@+id/action_albums_to_searchFragment"
+            app:destination="@id/searchFragment" />
     </fragment>
     <fragment
         android:id="@+id/artists"
@@ -22,6 +25,9 @@
         <action
             android:id="@+id/action_artists_to_artistDetails"
             app:destination="@id/artistDetails" />
+        <action
+            android:id="@+id/action_artists_to_searchFragment"
+            app:destination="@id/searchFragment" />
     </fragment>
     <fragment
         android:id="@+id/playlists"
@@ -31,12 +37,19 @@
         <action
             android:id="@+id/action_playlists_to_playlistDetailsFragment"
             app:destination="@id/playlistDetailsFragment" />
+        <action
+            android:id="@+id/action_playlists_to_searchFragment"
+            app:destination="@id/searchFragment" />
     </fragment>
     <fragment
         android:id="@+id/songs"
         android:name="com.chase.kudzie.chasemusic.ui.songs.SongsFragment"
         android:label="SongsFragment"
-        tools:layout="@layout/fragment_media_home" />
+        tools:layout="@layout/fragment_media_home">
+        <action
+            android:id="@+id/action_songs_to_searchFragment"
+            app:destination="@id/searchFragment" />
+    </fragment>
     <fragment
         android:id="@+id/albumDetails"
         android:name="com.chase.kudzie.chasemusic.ui.albumdetails.AlbumDetailsFragment"
@@ -71,7 +84,12 @@
             app:argType="long" />
         <argument
             android:name="playlistTitle"
-            app:argType="string"
-            android:defaultValue="Playlist" />
+            android:defaultValue="Playlist"
+            app:argType="string" />
     </fragment>
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="com.chase.kudzie.chasemusic.ui.search.SearchFragment"
+        android:label="SearchFragment"
+        tools:layout="@layout/fragment_search" />
 </navigation>

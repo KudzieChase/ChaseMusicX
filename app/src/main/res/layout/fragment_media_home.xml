@@ -28,6 +28,7 @@
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
+                android:outlineProvider="none"
                 android:layout_height="?attr/actionBarSize"
                 style="@style/Widget.Gallium.Toolbar"
                 app:layout_scrollFlags="scroll|enterAlways|snap"

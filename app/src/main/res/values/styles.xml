@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <style name="ShapeAppearanceOverlay.App.CornerSize50Percent" parent="">
         <item name="cornerSize">50%</item>
@@ -25,6 +25,15 @@
     <style name="TextAppearance.ToolbarTitleSmallCaps" parent="@style/TextAppearance.MaterialComponents.Headline4">
         <item name="android:fontFeatureSettings">smcp</item>
         <item name="android:letterSpacing">0.2</item>
+    </style>
+
+    <style name="Widget.Gallium.SearchView" parent="android:style/Widget.Material.SearchView">
+        <item name="android:searchIcon">@android:color/transparent</item>
+        <item name="android:searchHintIcon" tools:targetApi="lollipop_mr1">
+            @android:color/transparent
+        </item>
+        <item name="android:queryBackground">@android:color/transparent</item>
+        <item name="android:submitBackground">@android:color/transparent</item>
     </style>
 
 </resources>

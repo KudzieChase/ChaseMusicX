@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Source: Plaid::: https://github.com/nickbutcher/plaid/ -->
+<vector
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="@dimen/searchback_image_width"
+    android:height="@dimen/searchback_image_height"
+    android:viewportWidth="@integer/searchback_viewport_width"
+    android:viewportHeight="@integer/searchback_viewport_height">
+
+    <path
+        android:name="stem"
+        android:pathData="@string/searchback_path_stem"
+        android:strokeWidth="@integer/searchback_stroke_width"
+        android:strokeColor="@color/searchback_stroke_color"
+        android:trimPathStart="@fraction/searchback_stem_back_trim_start"
+        android:trimPathEnd="@fraction/searchback_stem_back_trim_end" />
+
+    <path
+        android:name="search_circle"
+        android:pathData="@string/searchback_path_circle"
+        android:strokeWidth="@integer/searchback_stroke_width"
+        android:strokeColor="@color/searchback_stroke_color"
+        android:trimPathEnd="@fraction/searchback_circle_back_trim_end" />
+
+    <group android:name="arrow_head">
+
+        <path
+            android:name="arrow_head_top"
+            android:pathData="@string/searchback_path_arrow_head_top"
+            android:strokeWidth="@integer/searchback_stroke_width"
+            android:strokeColor="@color/searchback_stroke_color"
+            android:trimPathEnd="@fraction/searchback_arrow_head_back_trim_end" />
+
+        <path
+            android:name="arrow_head_bottom"
+            android:pathData="@string/searchback_path_arrow_head_bottom"
+            android:strokeWidth="@integer/searchback_stroke_width"
+            android:strokeColor="@color/searchback_stroke_color"
+            android:trimPathEnd="@fraction/searchback_arrow_head_back_trim_end" />
+
+    </group>
+
+</vector>

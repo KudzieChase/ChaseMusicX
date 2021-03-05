@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Source: Plaid::: https://github.com/nickbutcher/plaid/ -->
+<transitionSet xmlns:android="http://schemas.android.com/apk/res/android"
+    android:duration="650"
+    android:transitionOrdering="together">
+
+    <targets>
+        <target android:targetId="@id/searchback" />
+    </targets>
+    <changeBounds android:interpolator="@android:interpolator/fast_out_slow_in" />
+    <changeTransform/>
+    <changeClipBounds/>
+    <changeImageTransform/>
+    <transition
+        class="com.chase.kudzie.chasemusic.util.transition.StartAnimatable"
+        android:src="@drawable/avd_search_to_back" />
+
+</transitionSet>

@@ -19,4 +19,9 @@
         <item name="bottomNavigationStyle">@style/Widget.ChaseMusicX.BottomNavigationView</item>
     </style>
 
+    <style name="SearchViewTheme" >
+        <item name="colorControlActivated">?android:colorPrimary</item>
+        <item name="android:searchViewStyle">@style/Widget.Gallium.SearchView</item>
+    </style>
+
 </resources>
